@@ -5,14 +5,18 @@ const minus = document.getElementById("minus");
 const number = document.querySelector("span");
 number.innerText = 0;
 
+const PLUS = "PLUS";
+const MINUS = "MINUS";
+
 //reducer, 2.modify data
 const countModifier = (count = 0, action) => {
-  if (action.type === "PLUS") {
-    return count + 1;
-  } else if (action.type === "MINUS") {
-    return count - 1;
-  } else {
-    return count;
+  switch (action.type) {
+    case PLUS:
+      return count + 1;
+    case MINUS:
+      return count - 1;
+    default:
+      return count;
   }
 };
 
@@ -22,14 +26,15 @@ const countStore = createStore(countModifier);
 const onChange = () => {
   number.innerText = countStore.getState();
 };
+//4. detect change
 countStore.subscribe(onChange);
 
 const handlePlus = () => {
-  countStore.dispatch({ type: "PLUS" });
+  countStore.dispatch({ type: PLUS });
 };
 
 const handleMinus = () => {
-  countStore.dispatch({ type: "MINUS" });
+  countStore.dispatch({ type: MINUS });
 };
 
 // 3.send message
