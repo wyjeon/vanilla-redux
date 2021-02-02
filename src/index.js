@@ -4,12 +4,26 @@ const plus = document.getElementById("plus");
 const minus = document.getElementById("minus");
 const number = document.querySelector("span");
 
-//reducer
-const countModifie = (count = 0) => {
-  return count;
+//reducer, 2.modify data
+const countModifier = (count = 0, action) => {
+  if (action.type === "PLUS") {
+    return count + 1;
+  } else if (action.type === "MINUS") {
+    return count - 1;
+  } else {
+    return count;
+  }
 };
 
-//store
-const countStore = createStore(countModifie);
+//store, 1.create store
+const countStore = createStore(countModifier);
+
+// 3.send message
+countStore.dispatch({ type: "PLUS" });
+countStore.dispatch({ type: "PLUS" });
+countStore.dispatch({ type: "PLUS" });
+countStore.dispatch({ type: "PLUS" });
+countStore.dispatch({ type: "PLUS" });
+countStore.dispatch({ type: "MINUS" });
 
 console.log(countStore.getState());
