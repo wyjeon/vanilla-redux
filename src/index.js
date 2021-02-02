@@ -3,6 +3,7 @@ import { createStore } from "redux";
 const plus = document.getElementById("plus");
 const minus = document.getElementById("minus");
 const number = document.querySelector("span");
+number.innerText = 0;
 
 //reducer, 2.modify data
 const countModifier = (count = 0, action) => {
@@ -18,12 +19,19 @@ const countModifier = (count = 0, action) => {
 //store, 1.create store
 const countStore = createStore(countModifier);
 
-// 3.send message
-countStore.dispatch({ type: "PLUS" });
-countStore.dispatch({ type: "PLUS" });
-countStore.dispatch({ type: "PLUS" });
-countStore.dispatch({ type: "PLUS" });
-countStore.dispatch({ type: "PLUS" });
-countStore.dispatch({ type: "MINUS" });
+const onChange = () => {
+  number.innerText = countStore.getState();
+};
+countStore.subscribe(onChange);
 
-console.log(countStore.getState());
+const handlePlus = () => {
+  countStore.dispatch({ type: "PLUS" });
+};
+
+const handleMinus = () => {
+  countStore.dispatch({ type: "MINUS" });
+};
+
+// 3.send message
+plus.addEventListener("click", handlePlus);
+minus.addEventListener("click", handleMinus);
